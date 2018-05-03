@@ -1,0 +1,32 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvTitle">
+<p>Borrar cliente</p>
+</div>
+<div id="dvClients">
+<form id="tblClients" action="/deleteClient?client_id={{client.key.urlsafe()}}" method="post">
+	<p>
+	<big><b>{{client.dni}}: {{client.surname}}, {{client.name}}</b></big> <i>en consulta desde ({{client.added}})</i>
+        {% if client.email %}
+	        <br>Email: <a target="_blank" href="mailto:{{client.email}}">{{client.email}}</a>
+        {% endif %}
+        {%  if client.comments %}
+	        <br>{{client.comments}}
+        {% endif %}
+	</p>
+	<input type="image"
+	 	width="16px" height="16px"
+		class="styled-button" src="/res/delete.svg"
+	 	title="delete" alt="delete"
+		onSubmit="javascript: document.tblClients.submit()"
+		/>
+</form>
+<div id="dvWarning">
+    <img height="24px" height="24px" src="/res/warning.svg" title="warning" alt="warning">
+    &nbsp;Una vez borrado, el cliente no puede recuperarse.
+</div>
+</div>
+<div id="dvSpecificActions">
+		<a href="/main"><img width="24px" height="24px" title="back" class="styled-button" src="/res/back.svg"/></a>
+</div>
+{% endblock %}

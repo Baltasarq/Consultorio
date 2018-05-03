@@ -1,0 +1,80 @@
+application: consultorio-demo
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: res/favicon.ico
+  upload: res/favicon\.ico
+
+- url: /template\.css
+  static_files: templates/template.css
+  upload: templates/template\.css
+
+- url: /res
+  static_dir: res
+
+- url: /templates
+  static_dir: templates
+  application_readable: true
+
+- url: /addClient
+  script: handlers.addclient.app
+  login: required
+
+- url: /modifyClient
+  script: handlers.modifyclient.app
+  login: required
+
+- url: /deleteClient
+  script: handlers.deleteclient.app
+  login: required
+
+- url: /main
+  script: handlers.clientsmanagement.app
+  login: required
+
+- url: /sessionsManagement
+  script: handlers.sessions.sessionsmanagement.app
+  login: required
+
+- url: /addSession
+  script: handlers.sessions.addsession.app
+  login: required
+
+- url: /deleteSession
+  script: handlers.sessions.deletesession.app
+  login: required
+
+- url: /modifySession
+  script: handlers.sessions.modifysession.app
+  login: required
+
+- url: /reportSession
+  script: handlers.sessions.reportsession.app
+  login: required
+
+- url: /error
+  script: handlers.error.app
+
+- url: /nouser
+  script: handlers.nouser.app
+
+- url: /admin
+  script: handlers.admin.app
+  login: admin
+
+- url: /
+  script: main.app
+
+- url: .*
+  script: handlers.error404.app
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest

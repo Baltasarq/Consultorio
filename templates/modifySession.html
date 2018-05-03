@@ -1,0 +1,72 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<script type="text/javascript">
+    function hideError() {
+        document.getElementById( "dvError" ).style.display = "none";
+    }
+
+    function showError(msg) {
+        var dvError = document.getElementById( "dvError" );
+        var pError = document.createElement( "p" );
+
+        dvError.innerHTML = "";
+        dvError.appendChild( pError );
+        pError.appendChild( document.createTextNode( msg ) );
+        dvError.style.display = "block";
+    }
+
+    function chk() {
+        var toret = true;
+        var edSubject = document.getElementById( "edSubject" );
+        var edProposal = document.getElementById( "edProposal" );
+
+        hideError();
+
+        if ( edSubject.value.trim().length == 0 ) {
+            showError( "El motivo de la consulta es obligatorio" );
+            toret = false;
+        }
+
+        if ( edProposal.value.trim().length == 0 ) {
+            showError( "La propuesta es obligatoria" );
+            toret = false;
+        }
+
+        return toret;
+    }
+</script>
+<div id="dvTitle">
+<p>Modificar sesi&oacute;n</p>
+</div>
+<div id="dvClients">
+<p>
+    <p align="right"><i>{{ session.added }}</i></p>
+    <form id="tblClients"
+        onsubmit="javascript: return chk();"
+        action="/modifySession?client_id={{ client_id }}&session_id={{session.key.urlsafe()}}" method="post">
+        <p>
+        <b><label for="subject">Motivo de la consulta</label></b>: <input type="text" name="subject" id="edSubject" size="50"
+                value="{{session.subject}}"
+                style="border:none;background-color:lightgray"/>
+        <br/>
+        <label for="comments">Comentarios</label>: <TextArea name="comments" id="edComments" rows="6" cols="80"
+                style="border:none;background-color:lightgray">{{session.comments}}</textarea>
+        <br/>
+        <b><label for="proposal">Propuesta</label></b>: <input type="text" name="proposal" id="edProposal" size="50"
+                value="{{session.proposal}}"
+                style="border:none;background-color:lightgray"/>
+        <p>
+            <input type="image"
+                class="styled-button"
+                title="modify" alt="modify"
+                width="16px" height="16px" src="/res/modify.svg"
+                onsubmit="javascript: document.tblClients.submit()"/>
+        </p>
+    </form>
+</div>
+<div id="dvError">
+</div>
+<div id="dvSpecificActions">
+	<a href="/sessionsManagement?client_id={{ client_id }}"><img width="24px" height="24px" alt="back" title="back" class="styled-button" src="/res/back.svg"/></a>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvTitle">
+<p>Borrar sesi&oacute;n de {{ client.name }} {{ client.surname }}</p>
+</div>
+<div id="dvClients">
+<form id="tblClients" action="/deleteSession?client_id={{client.key.urlsafe()}}&session_id={{ session.key.urlsafe() }}" method="post">
+	<p>
+	<b>{{session.subject}}</b>, <i>consulta de ({{session.added}})</i>
+        {% if session.comments %}
+	        <br><i>Comments: {{ session.comments }}</i>
+        {% endif %}
+        {%  if session.proposal %}
+	        <br>{{session.proposal}}
+        {% endif %}
+	</p>
+	<input type="image"
+	 	width="16px" height="16px"
+		class="styled-button" src="/res/delete.svg"
+	 	title="delete" alt="delete"
+		onSubmit="javascript: document.tblClients.submit()"
+		/>
+</form>
+<div id="dvWarning">
+    <img height="24px" height="24px" src="/res/warning.svg" title="warning" alt="warning">
+    &nbsp;Una vez borrada, la sesi&oacute;n no puede recuperarse.
+</div>
+</div>
+<div id="dvSpecificActions">
+		<a href="/sessionsManagement?client_id={{ client.key.urlsafe() }}"><img width="24px" height="24px" title="sesiones" class="styled-button" src="/res/back.svg"/></a>
+</div>
+{% endblock %}

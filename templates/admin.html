@@ -1,0 +1,49 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvWarning">
+    <img height="24px" height="24px" src="/res/warning.svg" title="warning" alt="warning">
+    &nbsp;Admin mode
+</div>
+<div id="dvTitle">
+    <table width="100%">
+        <tr>
+            <td width="10%"><b>Users</b></td>
+        </tr>
+    </table>
+</div>
+<div id="dvClients">
+    {% for user in users %}
+        <div id="tblClients"><p>
+            {{ user.email }}
+            {% if user.name %}: {{ user.name }}{% endif %}
+            {% if user.phone and user.address %}
+                <br><i>{{ user.phone }}</i>&nbsp;{{ user.address }}
+            {% endif %}
+        </p></div>
+    {% else %}
+        No users.
+    {% endfor %}
+    <p/>
+</div>
+<div id="dvAddUser">
+    <form id="frmAdd" method="post">
+        <label for="edEmail">E.mail</label> <input type="text" placeholder="e.mail" name="edEmail" id="edEmail">
+        <br>
+        <label for="edName">Name</label> <input type="text" placeholder="name" name="edName" id="edName">
+        <br>
+        <label for="edAddress">Address</label> <input type="text" placeholder="address" name="edAddress" id="edAddress">
+        <br>
+        <label for="edPhone">Phone</label> <input type="text" placeholder="phone" name="edPhone" id="edPhone">
+        <br>
+        <select id="edOp" name="edOp">
+            <option value="add">Add</option>
+            <option value="delete">Delete</option>
+        </select>
+        <input type="submit">
+    </form>
+</div>
+<div id="dvSpecificActions">
+    <a href="/main"><img width="24px" height="24px" title="clientes" class="styled-button" src="/res/back.svg"/></a>
+</div>
+{% endblock %}
+

@@ -1,0 +1,42 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvTitle">
+    <table width="100%">
+        <tr>
+            <td width="10%"><b>Clientes</b></td>
+            <td width="40%">
+                <form id="searchForNames" method="post" action="/main">
+                    <input name="lookFor" id="edLookFor" type="text" placeholder="Buscar..."><input type="submit" value="Buscar">
+                </form>
+            </td>
+            <td width="40%">
+                <form id="searchForDNI" method="post" action="/main">
+                    <input name="lookForDni" id="edLookForDni" type="text" placeholder="DNI..."><input type="submit" value="Buscar DNI">
+                </form>
+            </td>
+            <td width="10%">
+            <a href="/addClient"><img height="16px" width="16px" title="nuevo cliente" class="styled-button" src="/res/add.svg"/></a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="dvClients">
+    {% for client in clients %}
+        <div id="tblClients"><p>
+        <a href="/sessionsManagement?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="acceder" class="styled-button" src="/res/work.svg"/></a>
+        <a href="/modifyClient?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="modificar" class="styled-button" src="/res/modify.svg"/></a>
+        <a href="/deleteClient?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="eliminar" class="styled-button" src="/res/delete.svg"/></a>
+        <b><a href="/sessionsManagement?client_id={{client.key.urlsafe()}}">{{client.surname}}, {{client.name}}</a></b>
+        {% if client.email %}
+                <i><a target="_blank" href="mailto:{{client.email}}">Email: {{client.email}}</a></i>
+        {% endif %}
+        </p></div>
+    {% else %}
+        No hay clientes registrados.
+    {% endfor %}
+</div>
+<div id="dvSpecificActions">
+	<a href="/addClient"><img height="16px" width="16px" title="nuevo cliente" class="styled-button" src="/res/add.svg"/></a>
+</div>
+{% endblock %}
+

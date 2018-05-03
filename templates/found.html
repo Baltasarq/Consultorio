@@ -1,0 +1,30 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvTitle">
+    <table width="100%">
+        <tr>
+            <td width="20%"><b>Clientes</b></td>
+        </tr>
+    </table>
+</div>
+<div id="dvClients">
+    {% for client in clients %}
+        <p><div id="tblClients">
+        <a href="/sessionsManagement?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="acceso" class="styled-button" src="/res/work.svg"/></a>
+        <a href="/modifyClient?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="modificar" class="styled-button" src="/res/modify.svg"/></a>
+        <a href="/deleteClient?client_id={{client.key.urlsafe()}}"><img width="16px" height="16px" title="eliminar" class="styled-button" src="/res/delete.svg"/></a>
+        <b>{{client.dni}} {{client.surname}}, {{client.name}}</b> <i>(en consulta desde {{client.added}})</i>
+        {% if client.email %}
+                <a target="_blank" href="mailto:{{client.email}}">Email: {{client.email}}</a>
+        {% endif %}
+        </div></p>
+    {% else %}
+        No se encontraron resultados buscando: {{ keyText }}.
+    {% endfor %}
+    </div>
+</div>
+<div id="dvSpecificActions">
+    <a href="/main"><img height="16px" width="16px" title="volver" class="styled-button" src="/res/back.svg"/></a>
+	<a href="/addClient"><img height="16px" width="16px" title="nuevo cliente" class="styled-button" src="/res/add.svg"/></a>
+</div>
+{% endblock %}

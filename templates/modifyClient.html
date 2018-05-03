@@ -1,0 +1,122 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<script type="text/javascript">
+    function hideError() {
+        document.getElementById( "dvError" ).style.display = "none";
+    }
+
+    function showError(msg) {
+        var dvError = document.getElementById( "dvError" );
+        var pError = document.createElement( "p" );
+
+        dvError.innerHTML = "";
+        dvError.appendChild( pError );
+        pError.appendChild( document.createTextNode( msg ) );
+        dvError.style.display = "block";
+    }
+
+    function chk() {
+        var toret = true;
+        var edName = document.getElementById( "edName" );
+        var edSurname = document.getElementById( "edSurname" );
+        var edDni = document.getElementById( "edDni" );
+        var edCity = document.getElementById( "edCity" );
+        var edAddress = document.getElementById( "edAddress" );
+        var edZip = document.getElementById( "edZip" );
+
+        hideError();
+
+        if ( edName.value.trim().length == 0 ) {
+            showError( "El nombre es obligatorio" );
+            toret = false;
+        }
+
+        if ( edSurname.value.trim().length == 0 ) {
+            showError( "Los apellidos son obligatorios" );
+            toret = false;
+        }
+
+        if ( edAddress.value.trim().length == 0 ) {
+            showError( "La direcci&oacute;n es obligatoria" );
+            toret = false;
+        }
+
+        if ( edCity.value.trim().length == 0 ) {
+            showError( "La poblaci&oacute;n es obligatoria" );
+            toret = false;
+        }
+
+        if ( edDni.value.trim().length == 0 ) {
+            showError( "El DNI es obligatorio" );
+            toret = false;
+        }
+
+        var zip = parseInt( edZip.value, 10 );
+
+        if ( zip < 1 ) {
+            showError( "C&oacute;digo postal incorrecto!" );
+            toret = false;
+        }
+
+        return toret;
+    }
+</script>
+<div id="dvTitle">
+<p>Modificar cliente</p>
+</div>
+<div id="dvClientes">
+<p>
+<form id="tblClients"
+	onsubmit="javascript: return chk();"
+	action="/modifyClient?client_id={{client.key.urlsafe()}}" method="post">
+	<p>
+    <b><label for="dni">DNI</label></b>: <input type="text" name="dni" id="edDni" size="10"
+			value="{{client.dni}}"
+ 			style="border:none;background-color:lightgray"/>
+    <b><label for="birth">Fecha de nacimiento</label></b>: <input type="date" name="birth" id="edBirth" size="10"
+			value="{{client.birth}}"
+ 			style="border:none;background-color:lightgray"/>
+    <br />
+	<b><label for="name">Nombre</label></b>: <input type="text" name="name" id="edName" size="30"
+			value="{{client.name}}"
+ 			style="border:none;background-color:lightgray"/>
+    <br/>
+    <b><label for="surname">Apellidos</label></b>: <input type="text" name="surname" id="edSurname" size="40"
+			value="{{client.surname}}"
+ 			style="border:none;background-color:lightgray"/>
+	<br />
+    <b><label for="address">Direcci&oacute;n</label></b>: <input type="text" name="address" id="edAddress" size="70"
+			value="{{client.address}}"
+ 			style="border:none;background-color:lightgray"/>
+    <br />
+    <b><label for="zip">C&oacute;digo postal</label></b>: <input type="text" name="zip" id="edZip" size="10"
+			value="{{client.zip}}"
+ 			style="border:none;background-color:lightgray"/>
+    <b><label for="city">Poblaci&oacute;n</label></b>: <input type="text" name="city" id="edCity" size="50"
+			value="{{client.city}}"
+ 			style="border:none;background-color:lightgray"/>
+    <br />
+	<label for="email">E.mail</label>: <input type="text" name="email" id="edEmail" size="25"
+			value="{{client.email}}"
+ 			style="border:none;background-color:lightgray"/>
+    <label for="phone">Tel&eacute;fono</label>: <input type="text" name="phone" id="edPhone" size="20"
+			value="{{client.phone}}"
+ 			style="border:none;background-color:lightgray"/>
+    <br />
+	<label for="comments">Commentarios</label>: <TextArea name="comments" id="edComments" rows="6" cols="80"
+ 			style="border:none;background-color:lightgray">{{client.comments}}</textarea>
+	<p>
+		<input type="image"
+			class="styled-button"
+		 	title="modify" alt="modify"
+			width="16px" height="16px" src="/res/modify.svg"
+			onsubmit="javascript: document.tblClients.submit()"/>
+	</p>
+</form>
+</div>
+<div id="dvError">
+</div>
+<div id="dvSpecificActions">
+	<a href="/main"><img width="24px" height="24px" alt="back" title="back" class="styled-button" src="/res/back.svg"/></a>
+</div>
+{% endblock %}

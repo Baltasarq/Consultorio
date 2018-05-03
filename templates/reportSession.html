@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>{{ info.Name }}</title>
+</head>
+<body>
+    <p><i>
+        {{ user_info.name }}
+        <br/>{{ user_info.address }}
+        <br/>
+        {% if user_info.phone %}
+            Tlf.: {{ user_info.phone }}
+        {% endif %}
+        {% if user_info.email %}
+            Email: {{ user_info.email }}
+        {% endif %}
+    </i></p>
+    <h1>Sesi&oacute;n {{ session.added }}</h1>
+    <h2>{{ session.subject }}</h2>
+
+    <p align="right">{{ client.name}} {{ client.surname }}</p>
+
+    {% if session.comments %}
+        <p align="justify"><b>Comentarios</b>:<br /><i>{{ session.comments }}</i></p>
+    {% endif %}
+
+    <p align="justify"><b>Propuesta</b>:<br />{{ session.proposal }}</p>
+</body>
+</html>

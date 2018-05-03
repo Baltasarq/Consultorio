@@ -1,0 +1,35 @@
+{% extends "skeleton.html" %}
+{% block content %}
+<div id="dvTitle">
+<p>
+    <table width="100%">
+        <tr>
+            <td width="90%"><b>Sesiones de {{ client.name }} {{ client.surname }}</b></td>
+            <td width="10%">
+            <a href="/addSession?client_id={{ client.key.urlsafe() }}"><img height="16px" width="16px" title="nueva sesio&oacute;n" class="styled-button" src="/res/add.svg"/></a>
+            </td>
+        </tr>
+    </table>
+
+
+</p>
+</div>
+<div id="dvClients">
+    {% for session in sessions %}
+        <div id="tblClients"><p>
+        <a target="_blank" href="/reportSession?client_id={{ client.key.urlsafe() }}&session_id={{session.key.urlsafe()}}"><img width="16px" height="16px" title="informe" class="styled-button" src="/res/report.svg"/></a>
+        <a href="/modifySession?client_id={{ client.key.urlsafe() }}&session_id={{session.key.urlsafe()}}"><img width="16px" height="16px" title="modificar" class="styled-button" src="/res/modify.svg"/></a>
+        <a href="/deleteSession?client_id={{ client.key.urlsafe() }}&session_id={{session.key.urlsafe()}}"><img width="16px" height="16px" title="eliminar" class="styled-button" src="/res/delete.svg"/></a>
+        <a href="/modifySession?client_id={{ client.key.urlsafe() }}&session_id={{session.key.urlsafe()}}"><b>{{session.added}}: {{session.subject}}</b></a>
+            <br><i>{{ session.comments[:80] }}</i>
+            <br><i>{{ session.proposal[:80] }}</i>
+        </p></div>
+    {% else %}
+        No hay sesiones registradas.
+    {% endfor %}
+</div>
+<div id="dvSpecificActions">
+    <a href="/main"><img height="16px" width="16px" title="volver" class="styled-button" src="/res/back.svg"/></a>
+	<a href="/addSession?client_id={{client.key.urlsafe()}}"><img height="16px" width="16px" title="nueva sesi&oacute;n" class="styled-button" src="/res/add.svg"/></a>
+</div>
+{% endblock %}
