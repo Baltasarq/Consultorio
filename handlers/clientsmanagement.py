@@ -42,33 +42,33 @@ class ClientsManagementHandler(webapp2.RequestHandler):
             self.redirect("/")
             return
 
-        keyText = self.request.get("lookFor", None)
-        dniText = self.request.get("lookForDni", None)
+        key_text = self.request.get("lookFor", None)
+        dni_text = self.request.get("lookForDni", None)
 
-        if not keyText and not dniText:
+        if not key_text and not dni_text:
             self.redirect("/main")
             return
 
-        if dniText:
-            dniText = dniText.strip()
+        if dni_text:
+            dni_text = dni_text.strip()
             try:
-                dni = int(dniText)
+                dni = int(dni_text)
             except:
                 dni = 0
 
-            keyText = dniText
+            key_text = dni_text
             self.result_set = Client.query(Client.dni == dni).order(Client.surname)
         else:
-            self.keyText = keyText.strip().lower()
+            self.key_text = key_text.strip().lower()
             self.result_set = []
-            Client.query().order(Client.surname).map(self.lookFor)
+            Client.query().order(Client.surname).map(self.key_text)
 
         template_values = {
             "info": AppInfo,
             "user_name": user.nickname(),
             "access_link": users.create_logout_url("/"),
             "clients": self.result_set,
-            "keyText": keyText
+            "key_text": key_text
         }
 
         jinja = jinja2.get_jinja2(app=self.app)
@@ -78,8 +78,8 @@ class ClientsManagementHandler(webapp2.RequestHandler):
         surname = client.surname.lower()
         name = client.name.lower()
 
-        if (self.keyText in surname
-         or self.keyText in name):
+        if (self.key_text in surname
+         or self.key_text in name):
             self.result_set += [client]
 
         return
